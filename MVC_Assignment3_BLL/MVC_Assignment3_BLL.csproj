@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MVC_Assignment3_DAL\MVC_Assignment3_DAL.csproj" />
   </ItemGroup>
 

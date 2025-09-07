@@ -1,3 +1,8 @@
+using MVC_Assignment3_BLL.Services;
+using MVC_Assignment3_DAL.Context;
+using MVC_Assignment3_DAL.Repositories;
+using MVC_Assignment3_PL.Controllers;
+
 namespace MVC_Assignment3_PL
 {
     public class Program
@@ -8,9 +13,14 @@ namespace MVC_Assignment3_PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+           
+            #region Dependency Injection(Add Services)
+            builder.Services.AddScoped<IDepartmentService,DepartmentService>();
+            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+            builder.Services.AddScoped<CompanyDBContext>();
             var app = builder.Build();
-
+            #endregion
+           
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -20,6 +30,7 @@ namespace MVC_Assignment3_PL
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             //app.UseRouting();
 
             //app.UseAuthorization();
