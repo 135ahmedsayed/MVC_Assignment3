@@ -15,6 +15,9 @@ namespace MVC_Assignment3_PL.Controllers
 
         public IActionResult Index()
         {
+            // DB Call
+            // Business Logic
+            // UI
             return View();
         }
 

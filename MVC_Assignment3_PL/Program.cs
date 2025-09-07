@@ -20,9 +20,9 @@ namespace MVC_Assignment3_PL
             }
 
             app.UseHttpsRedirection();
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
