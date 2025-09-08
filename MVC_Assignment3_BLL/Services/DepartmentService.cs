@@ -1,15 +1,43 @@
-﻿using MVC_Assignment3_DAL.Repositories;
+﻿using Azure.Core;
+using MVC_Assignment3_BLL.DataTransferObjects;
+using MVC_Assignment3_DAL.Entities;
+using MVC_Assignment3_DAL.Repositories;
 
 namespace MVC_Assignment3_BLL.Services;
-public class DepartmentService : IDepartmentService
+public class DepartmentService(IDepartmentRepository departmentRepository) : IDepartmentService
 {
     #region Dependency Injection
     //Repo
-    private IDepartmentRepository _departmentRepository;
+    //private IDepartmentRepository _departmentRepository = departmentRepository;
 
-    public DepartmentService(IDepartmentRepository departmentRepository)
+    public int Add(DepartmentRequest request)
     {
-        _departmentRepository = departmentRepository;
+        //mapping 
+        var department = request.ToDepartmentRequest();
+        return departmentRepository.Add(department);
+    }
+
+    public int Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<DepartmentResponse>? GetAll()
+    {
+        return departmentRepository.GetAll()
+            .Select(d => d.ToDepartmentResponse());
+    }
+
+    public DepartmentDetailsResponse? GetById(int id)
+    {
+        return departmentRepository.GetById(id)?
+            .ToDepartmentDetailsResponse();
+    }
+
+    public int Update(DepartmentUpdateRequest request)
+    {
+        return departmentRepository.Update(request.UpdateDepartment());
+           
     }
     #endregion
 }
