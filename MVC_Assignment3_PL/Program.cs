@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MVC_Assignment3_BLL.Services;
 using MVC_Assignment3_DAL.Context;
 using MVC_Assignment3_DAL.Repositories;
@@ -17,7 +18,12 @@ namespace MVC_Assignment3_PL
             #region Dependency Injection(Add Services)
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            builder.Services.AddScoped<CompanyDBContext>();
+            //builder.Services.AddScoped<CompanyDBContext>();
+            builder.Services.AddDbContext<CompanyDBContext>(option =>
+            {
+                var Connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
+                option.UseSqlServer(Connectionstring); // Connection String
+            });
             var app = builder.Build();
             #endregion
            

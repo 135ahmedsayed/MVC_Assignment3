@@ -1,6 +1,6 @@
 ﻿namespace MVC_Assignment3_DAL.Context;
-public class CompanyDBContext
-    : DbContext
+public class CompanyDBContext(DbContextOptions<CompanyDBContext> options)
+    : DbContext(options)
 {
     public DbSet<Department> Departments { get; set; }
 
