@@ -48,4 +48,17 @@ public class DepartmentController(IDepartmentService departmentService,
         return View(request);
     }
     #endregion
+
+    #region Details
+    [HttpGet]
+    public IActionResult Details(int? id)
+    {
+        if(!id.HasValue)
+            return BadRequest();
+        var department = departmentService.GetById(id.Value);
+        if (department == null)
+            return NotFound();
+        return View(department);
+    }
+    #endregion
 }

@@ -10,5 +10,5 @@ public class DepartmentDetailsResponse //get by id
     public string Name { get; set; } = null!;
     public string Code { get; set; } = null!;
     public string? Description { get; set; }
-    public DateTime CraetedAt { get; set; } //user Input
+    public DateTime CreatedAt { get; set; } //user Input
 }
