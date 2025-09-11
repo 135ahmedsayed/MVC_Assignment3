@@ -25,9 +25,9 @@
             @foreach (var department in Model)
             {
                         <tr>
-                            <td>@Html.DisplayFor(d => department.Code)</td>
-                            <td>@Html.DisplayFor(d => department.Name)</td>
-                                    <td>@Html.DisplayFor(d => department.CreatedAt)</td>
+                            <td>@Html.DisplayFor(_ => department.Code)</td>
+                            <td>@Html.DisplayFor(_ => department.Name)</td>
+                            <td>@Html.DisplayFor(_ => department.CreatedAt)</td>
 
                             <td>
                                 <a class="btn btn-primary" asp-action="Details" >

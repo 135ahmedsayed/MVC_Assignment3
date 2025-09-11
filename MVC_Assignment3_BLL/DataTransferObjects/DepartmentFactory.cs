@@ -10,7 +10,7 @@ public static class DepartmentFactory
             Name = department.Name,
             Code = department.Code,
             Description = department.Description,
-            CraetedAt = department.CraetedAt,
+            CraetedAt = department.CreatedAt,
         };
     }
 

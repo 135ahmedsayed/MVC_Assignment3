@@ -1,18 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVC_Assignment3_BLL.DataTransferObjects;
 using MVC_Assignment3_BLL.Services;
 
 namespace MVC_Assignment3_PL.Controllers;
-public class DepartmentController(IDepartmentService departmentService) : Controller
+public class DepartmentController(IDepartmentService departmentService,
+    ILogger<DepartmentController> logger , IWebHostEnvironment env) 
+    : Controller
 {
     #region Dependency Injection
     // Service
-    
-    #endregion
 
+    #endregion
+    [HttpGet]
     public IActionResult Index()
     {
         // Get All Department
         var departments = departmentService.GetAll();
         return View(departments);
     }
+
+    #region Create
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+    [HttpPost]
+    public IActionResult Create(DepartmentRequest request)
+    {
+        //Validation
+        if(!ModelState.IsValid)
+            return View(request);
+        try
+        {
+            var result = departmentService.Add(request);
+            if (result > 0)
+                return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "Unable to Create department");
+        }
+        catch (Exception ex)
+        {
+            if(env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
+        return View(request);
+    }
+    #endregion
 }
