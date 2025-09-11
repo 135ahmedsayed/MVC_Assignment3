@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Assignment3_BLL.DataTransferObjects;
 using MVC_Assignment3_BLL.Services;
 
@@ -98,6 +99,41 @@ public class DepartmentController(IDepartmentService departmentService,
                 logger.LogError("Something is Wrong", ex.Message);
         }
         return View(request);
+    }
+    #endregion
+
+    #region Delete
+    [HttpGet]
+    public IActionResult Delete(int? id)
+    {
+        if (!id.HasValue)
+            return BadRequest();
+        var department = departmentService.GetById(id.Value);
+        if (department == null)
+            return NotFound();
+        return View(department);
+    }
+    [HttpPost ,ActionName("Delete")]
+    public IActionResult ConfirmDelete(int? id)
+    {
+        if (!id.HasValue)
+            return BadRequest();
+        var department = departmentService.GetById(id.Value);
+        try
+        {
+            var IsDeleted = departmentService.Delete(id.Value);
+            if (IsDeleted)
+                return RedirectToAction(nameof(Index));
+            ModelState.AddModelError(string.Empty, "Unable to Create department");
+        }
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
+        return View(department);
     }
     #endregion
 }

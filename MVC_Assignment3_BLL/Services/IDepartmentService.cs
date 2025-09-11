@@ -6,6 +6,6 @@ public interface IDepartmentService
     DepartmentDetailsResponse? GetById(int id); //get by id
     IEnumerable<DepartmentResponse>? GetAll(); //GetALL
     int Update(DepartmentUpdateRequest request);
-    int Delete(int id);
+    bool Delete(int id);
     int Add(DepartmentRequest request); //Add()
 }
