@@ -17,9 +17,14 @@ public class DepartmentService(IDepartmentRepository departmentRepository) : IDe
         return departmentRepository.Add(department);
     }
 
-    public int Delete(int id)
+    public bool Delete(int id)
     {
-        throw new NotImplementedException();
+        var department = departmentRepository.GetById(id);
+        if (department == null)
+            return false;
+        var result = departmentRepository.Delete(department);
+        return result > 0;   
+
     }
 
     public IEnumerable<DepartmentResponse>? GetAll()
@@ -36,7 +41,7 @@ public class DepartmentService(IDepartmentRepository departmentRepository) : IDe
 
     public int Update(DepartmentUpdateRequest request)
     {
-        return departmentRepository.Update(request.UpdateDepartment());
+        return departmentRepository.Update(request.ToDepartmentRequest());
            
     }
     #endregion

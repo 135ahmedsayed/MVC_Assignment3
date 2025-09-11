@@ -1,12 +1,23 @@
 ﻿using MVC_Assignment3_DAL.Entities;
 
 namespace MVC_Assignment3_BLL.DataTransferObjects;
-internal static class DepartmentFactory
+public static class DepartmentFactory
 {
     public static Department ToDepartmentRequest(this DepartmentRequest department)
     {
         return new ()
         {
+            Name = department.Name,
+            Code = department.Code,
+            Description = department.Description,
+            CraetedAt = department.CreatedAt,
+        };
+    }
+    public static Department ToDepartmentRequest(this DepartmentUpdateRequest department)
+    {
+        return new ()
+        {
+            Id = department.Id,
             Name = department.Name,
             Code = department.Code,
             Description = department.Description,
@@ -22,7 +33,7 @@ internal static class DepartmentFactory
             Name = department.Name,
             Code = department.Code,
             Description = department.Description,
-            CraetedAt = DateOnly.FromDateTime(department.CreateOn),
+            CreatedAt = department.CraetedAt,
         };
     }
     public static DepartmentDetailsResponse ToDepartmentDetailsResponse(this Department department)
@@ -38,10 +49,10 @@ internal static class DepartmentFactory
             Name = department.Name,
             Code = department.Code,
             Description = department.Description,
-            CraetedAt = department.CraetedAt,
+            CreatedAt = department.CraetedAt,
         };
     }
-    public static Department UpdateDepartment(this DepartmentUpdateRequest request)
+    public static DepartmentUpdateRequest UpdateDepartment(this DepartmentDetailsResponse request)
     {
         return new()
         {
@@ -49,7 +60,7 @@ internal static class DepartmentFactory
             Name = request.Name,
             Code = request.Code,
             Description = request.Description,
-            CraetedAt = request.CraetedAt,
+            CraetedAt = request.CreatedAt,
         };
     }
 }
