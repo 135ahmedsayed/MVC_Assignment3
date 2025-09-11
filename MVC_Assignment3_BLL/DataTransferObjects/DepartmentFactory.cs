@@ -1,7 +1,7 @@
 ﻿using MVC_Assignment3_DAL.Entities;
 
 namespace MVC_Assignment3_BLL.DataTransferObjects;
-internal static class DepartmentFactory
+public static class DepartmentFactory
 {
     public static Department ToDepartmentRequest(this DepartmentRequest department)
     {
@@ -22,7 +22,7 @@ internal static class DepartmentFactory
             Name = department.Name,
             Code = department.Code,
             Description = department.Description,
-            CraetedAt = DateOnly.FromDateTime(department.CreateOn),
+            CreatedAt = department.CraetedAt,
         };
     }
     public static DepartmentDetailsResponse ToDepartmentDetailsResponse(this Department department)
