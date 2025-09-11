@@ -61,4 +61,43 @@ public class DepartmentController(IDepartmentService departmentService,
         return View(department);
     }
     #endregion
+
+    #region Edit
+    [HttpGet]
+    public IActionResult Edit(int? id)
+    {
+        if (!id.HasValue)
+            return BadRequest();
+        var department = departmentService.GetById(id.Value);
+        if (department == null)
+            return NotFound();
+        return View(department.UpdateDepartment());
+    }
+    [HttpPost]
+    public IActionResult Edit([FromRoute]int? id , DepartmentUpdateRequest request)
+    {
+        //Validation
+        if (!id.HasValue)
+            return BadRequest();
+        if (id.Value != request.Id)
+            return BadRequest();
+        if (!ModelState.IsValid)
+            return View(request);
+        try
+        {
+            var result = departmentService.Update(request);
+            if (result > 0)
+                return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "Unable to Create department");
+        }
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
+        return View(request);
+    }
+    #endregion
 }

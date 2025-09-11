@@ -13,6 +13,17 @@ public static class DepartmentFactory
             CraetedAt = department.CreatedAt,
         };
     }
+    public static Department ToDepartmentRequest(this DepartmentUpdateRequest department)
+    {
+        return new ()
+        {
+            Id = department.Id,
+            Name = department.Name,
+            Code = department.Code,
+            Description = department.Description,
+            CraetedAt = department.CraetedAt,
+        };
+    }
 
     public static DepartmentResponse ToDepartmentResponse(this Department department)
     {
@@ -41,7 +52,7 @@ public static class DepartmentFactory
             CreatedAt = department.CraetedAt,
         };
     }
-    public static Department UpdateDepartment(this DepartmentUpdateRequest request)
+    public static DepartmentUpdateRequest UpdateDepartment(this DepartmentDetailsResponse request)
     {
         return new()
         {
@@ -49,7 +60,7 @@ public static class DepartmentFactory
             Name = request.Name,
             Code = request.Code,
             Description = request.Description,
-            CraetedAt = request.CraetedAt,
+            CraetedAt = request.CreatedAt,
         };
     }
 }

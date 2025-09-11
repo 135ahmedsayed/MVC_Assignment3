@@ -36,7 +36,7 @@ public class DepartmentService(IDepartmentRepository departmentRepository) : IDe
 
     public int Update(DepartmentUpdateRequest request)
     {
-        return departmentRepository.Update(request.UpdateDepartment());
+        return departmentRepository.Update(request.ToDepartmentRequest());
            
     }
     #endregion
