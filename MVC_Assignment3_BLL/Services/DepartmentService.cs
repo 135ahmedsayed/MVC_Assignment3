@@ -1,10 +1,10 @@
 ﻿using Azure.Core;
-using MVC_Assignment3_BLL.DataTransferObjects;
+using MVC_Assignment3_BLL.DataTransferObjects.Departments;
 using MVC_Assignment3_DAL.Entities;
 using MVC_Assignment3_DAL.Repositories;
 
 namespace MVC_Assignment3_BLL.Services;
-public class DepartmentService(IDepartmentRepository departmentRepository) : IDepartmentService
+public class DepartmentService(IRepository<Department> departmentRepository) : IDepartmentService
 {
     #region Dependency Injection
     //Repo

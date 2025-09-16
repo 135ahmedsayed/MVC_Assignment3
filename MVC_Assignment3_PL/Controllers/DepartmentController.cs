@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
-using MVC_Assignment3_BLL.DataTransferObjects;
+using MVC_Assignment3_BLL.DataTransferObjects.Departments;
 using MVC_Assignment3_BLL.Services;
 
 namespace MVC_Assignment3_PL.Controllers;
