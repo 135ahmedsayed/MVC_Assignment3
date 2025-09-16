@@ -3,6 +3,7 @@ public class CompanyDBContext(DbContextOptions<CompanyDBContext> options)
     : DbContext(options)
 {
     public DbSet<Department> Departments { get; set; }
+    public DbSet<Employee> Employees { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
