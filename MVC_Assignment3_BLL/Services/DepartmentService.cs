@@ -1,5 +1,5 @@
 ﻿using Azure.Core;
-using MVC_Assignment3_BLL.DataTransferObjects;
+using MVC_Assignment3_BLL.DataTransferObjects.Departments;
 using MVC_Assignment3_DAL.Entities;
 using MVC_Assignment3_DAL.Repositories;
 

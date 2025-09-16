@@ -1,11 +1,11 @@
 ﻿using MVC_Assignment3_DAL.Entities;
 
-namespace MVC_Assignment3_BLL.DataTransferObjects;
+namespace MVC_Assignment3_BLL.DataTransferObjects.Departments;
 public static class DepartmentFactory
 {
     public static Department ToDepartmentRequest(this DepartmentRequest department)
     {
-        return new ()
+        return new()
         {
             Name = department.Name,
             Code = department.Code,
@@ -15,7 +15,7 @@ public static class DepartmentFactory
     }
     public static Department ToDepartmentRequest(this DepartmentUpdateRequest department)
     {
-        return new ()
+        return new()
         {
             Id = department.Id,
             Name = department.Name,

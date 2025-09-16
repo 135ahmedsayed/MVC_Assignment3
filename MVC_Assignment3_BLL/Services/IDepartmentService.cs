@@ -1,4 +1,4 @@
-﻿using MVC_Assignment3_BLL.DataTransferObjects;
+﻿using MVC_Assignment3_BLL.DataTransferObjects.Departments;
 
 namespace MVC_Assignment3_BLL.Services;
 public interface IDepartmentService

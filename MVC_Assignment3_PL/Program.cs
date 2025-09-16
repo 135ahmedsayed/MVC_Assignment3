@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MVC_Assignment3_BLL.Services;
 using MVC_Assignment3_DAL.Context;
 using MVC_Assignment3_DAL.Entities;
 using MVC_Assignment3_DAL.Repositories;
-using MVC_Assignment3_PL.Controllers;
+
+using MVC_Assignment3_BLL;
 
 namespace MVC_Assignment3_PL
 {
@@ -29,6 +31,10 @@ namespace MVC_Assignment3_PL
                 var Connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
                 option.UseSqlServer(Connectionstring); // Connection String
             });
+
+            //AutoMapper
+            //builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly); Wrong
+            builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReference).Assembly));
             var app = builder.Build();
             #endregion
            

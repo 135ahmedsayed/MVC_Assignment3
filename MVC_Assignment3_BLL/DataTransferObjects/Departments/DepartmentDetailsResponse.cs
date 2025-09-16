@@ -1,4 +1,4 @@
-﻿namespace MVC_Assignment3_BLL.DataTransferObjects;
+﻿namespace MVC_Assignment3_BLL.DataTransferObjects.Departments;
 public class DepartmentDetailsResponse //get by id
 {
     public int Id { get; set; } //PK
