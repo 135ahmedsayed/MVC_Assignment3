@@ -13,5 +13,6 @@ public class EmployeeProfile : Profile
         CreateMap<Employee, EmployeeResponse>();
         CreateMap<Employee, EmployeeDetailsResponse>();
         CreateMap<EmployeeDetailsResponse,EmployeeUpdateRequest>();
+        CreateMap<EmployeeUpdateRequest, EmployeeRequest>();
     }
 }
