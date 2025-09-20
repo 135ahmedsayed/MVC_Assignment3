@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<EmployeeResponse>
 @{
     ViewData["Title"] = "Index";
+    // var x = ViewData["Hi"] as string;
+    string x = ViewBag.Hi;
 }
-
+@* transfer Index ==> View *@
+<h1>@ViewData["Hi"]</h1>
+<h1>@x</h1>
+<br />
 <h1>All Employees</h1>
 <br />
 <br />

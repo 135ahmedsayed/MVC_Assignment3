@@ -10,16 +10,19 @@ public class EmployeeController(IEmployeeService employeeService,
     ILogger < EmployeeController > logger, IWebHostEnvironment env, IMapper mapper)
     : Controller
 {
-    #region Dependency Injection
-    // Service
+    //transfer Data
+    //1. Action ==> View
+    //2. View   ==> Layout
+    //3. View   ==> Partial
 
-    #endregion
     [HttpGet]
 public IActionResult Index()
 {
-    // Get All Employee
-    var employees = employeeService.GetAll();
-    return View(employees);
+        // Get All Employee
+        var employees = employeeService.GetAll();
+        ViewData["Hi"] = "Welcome to Employee Page";
+        ViewBag.Hi = "Welcome to Employee Page";
+        return View(employees);
 }
 
 #region Create
