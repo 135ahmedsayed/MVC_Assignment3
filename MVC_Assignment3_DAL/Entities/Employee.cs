@@ -11,7 +11,7 @@ public class Employee : BaseEntity
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
     public DateOnly HiringDate { get; set; }
-    public string Position { get; set; }
+    public string? Position { get; set; }
     public Gender gender { get; set; }
     public EmployeeType employeeType { get; set; }
 }

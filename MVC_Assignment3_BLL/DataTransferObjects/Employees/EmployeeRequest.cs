@@ -24,6 +24,6 @@ public class EmployeeRequest //create
     public string? Phone { get; set; }
     [Display(Name = "Hiring Date")]
     public DateOnly HiringDate { get; set; }
-    public Gender gender { get; set; }
-    public EmployeeType employeeType { get; set; }
+    public string gender { get; set; }
+    public string employeeType { get; set; }
 }

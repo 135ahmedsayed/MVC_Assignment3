@@ -19,6 +19,16 @@ public class BaseRepository<TEntity>(CompanyDBContext dBContext)
     public virtual int Add(TEntity entity)
     {
         _dBContext.Add(entity);
+        //return dBContext.SaveChanges();
+        try
+        {
+            return dBContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            // هنا هنطبع الرسالة الأساسية
+            Console.WriteLine(ex.Message);
+        }
         return dBContext.SaveChanges();
     }
 

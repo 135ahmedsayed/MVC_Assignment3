@@ -1,7 +1,7 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using MVC_Assignment3_BLL.DataTransferObjects.Departments;
-using MVC_Assignment3_BLL.Services;
+﻿global using Azure.Core;
+global using Microsoft.AspNetCore.Mvc;
+global using MVC_Assignment3_BLL.DataTransferObjects.Departments;
+global using MVC_Assignment3_BLL.Services;
 
 namespace MVC_Assignment3_PL.Controllers;
 public class DepartmentController(IDepartmentService departmentService,

@@ -6,6 +6,8 @@ public class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
+        builder.Property(d => d.Id)
+            .UseIdentityColumn(1, 1);
         builder.Property(e => e.Name)
             .HasColumnType("VarChar")
             .IsRequired(true)
