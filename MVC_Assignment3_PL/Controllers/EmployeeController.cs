@@ -40,9 +40,14 @@ public IActionResult Create(EmployeeRequest request)
     try
     {
         var result = employeeService.Add(request);
-        if (result > 0)
-            return RedirectToAction("Index");
-        ModelState.AddModelError(string.Empty, "Unable to Create employee");
+            if (result > 0)
+                TempData["message"] = $"Employee {request.Name} is Created .";
+            else
+                TempData["message"] = $"Employee {request.Name} is not Created .";    
+
+        return RedirectToAction("Index");
+        
+        //ModelState.AddModelError(string.Empty, "Unable to Create employee");
     }
     catch (Exception ex)
     {
