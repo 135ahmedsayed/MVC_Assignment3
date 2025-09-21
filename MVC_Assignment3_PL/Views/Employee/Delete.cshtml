@@ -1,0 +1,22 @@
+﻿@model EmployeeDetailsResponse
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="my-5 w-75 m-auto">Delete Employee</h1>
+
+<partial name="Partials/DeleteDetailsPartial" />
+
+    <div class="mt-4">
+        <form method="post" asp-controller="Employee" asp-action="Delete" asp-route-id="@Model.Id">
+            <input type="submit" class="btn btn-danger" value="Delete" />
+            <a asp-action="Index" class="btn btn-outline-dark">Back To list</a>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+

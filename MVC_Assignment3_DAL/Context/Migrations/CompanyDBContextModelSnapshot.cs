@@ -119,7 +119,6 @@ namespace MVC_Assignment3_DAL.Context.Migrations
                         .HasColumnType("Char");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Salary")

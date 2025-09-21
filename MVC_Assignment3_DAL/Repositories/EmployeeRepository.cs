@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using MVC_Assignment3_DAL.Context;
 
 namespace MVC_Assignment3_DAL.Repositories;
@@ -52,5 +53,10 @@ public class EmployeeRepository(CompanyDBContext dbContext)
     public IEnumerable<Employee> GetAll(string name)
     {
        return _dBContext.Where(e => e.Name.Contains(name)).ToList();
+    }
+
+    public IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector)
+    {
+        return _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToList();
     }
 }

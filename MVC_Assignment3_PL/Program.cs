@@ -20,10 +20,12 @@ namespace MVC_Assignment3_PL
            
             #region Dependency Injection(Add Services)
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
+            builder.Services.AddScoped<IEmployeeService,EmployeeService>();
             #region Repistory
-            //builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IRepository<Department>, BaseRepository<Department>>();
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            //builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             #endregion
             //builder.Services.AddScoped<CompanyDBContext>();
             builder.Services.AddDbContext<CompanyDBContext>(option =>
