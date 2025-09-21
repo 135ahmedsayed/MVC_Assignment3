@@ -33,8 +33,16 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
 
     public IEnumerable<EmployeeResponse>? GetAll()
     {
-        var employee = employeeRepository.GetAll();
-        return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
+        var employee = employeeRepository.GetAll(x => new EmployeeResponse
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Age = x.Age,
+            Salary = x.Salary,
+            IsActive = x.IsActive,
+        });
+        //return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
+        return employee;
     }
 
     public EmployeeDetailsResponse? GetById(int id)
