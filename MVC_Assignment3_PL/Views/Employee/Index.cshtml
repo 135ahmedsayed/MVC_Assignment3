@@ -27,6 +27,18 @@
 <h1>All Employees</h1>
 <br />
 <br />
+@* search *@
+<div class="m-2">
+    <form class="row offset-2" asp-action="Index" method="get">
+        <div class="col-8">
+            <input class="form-control" type="text" name="SearchValue" placeholder="Search by Employee Name"/>
+        </div>
+        <div class="col-4">
+            <input type="submit" class="btn btn-outline-dark" value="Search"/>
+        </div>
+    </form>
+</div>
+@* ///// *@
 <a class="btn btn-primary" asp-controller="Employee" asp-action="Create">Create Employee</a>
 <br />
 @if (Model.Any())
@@ -36,6 +48,7 @@
             <tr>
                 <th>@Html.DisplayNameFor(e => e.Name)</th>
                 <th>@Html.DisplayNameFor(e => e.Email)</th>
+                <th>@Html.DisplayNameFor(e => e.DepartmentName)</th>
                 <th>@Html.DisplayNameFor(e => e.employeeType)</th>
                 <th>@Html.DisplayNameFor(e => e.Age)</th>
                 <th>@Html.DisplayNameFor(e => e.Salary)</th>
@@ -53,6 +66,7 @@
 
                     <td>@Html.DisplayFor(_ => employee.Name)</td>
                     <td>@Html.DisplayFor(_ => employee.Email)</td>
+                    <td>@Html.DisplayFor(_ => employee.DepartmentName)</td>
                     <td>@Html.DisplayFor(_ => employee.employeeType)</td>
                     <td>@Html.DisplayFor(_ => employee.Age)</td>
                     <td>@Html.DisplayFor(_ => employee.Salary)</td>

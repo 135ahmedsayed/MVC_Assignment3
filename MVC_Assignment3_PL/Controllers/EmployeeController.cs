@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Emit;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC_Assignment3_BLL.DataTransferObjects.Employees;
 using MVC_Assignment3_BLL.Services;
 using MVC_Assignment3_DAL.Entities;
@@ -7,85 +8,100 @@ using MVC_Assignment3_DAL.Entities;
 namespace MVC_Assignment3_PL.Controllers;
 
 public class EmployeeController(IEmployeeService employeeService,
-    ILogger < EmployeeController > logger, IWebHostEnvironment env, IMapper mapper)
+    ILogger < EmployeeController > logger, IWebHostEnvironment env, IMapper mapper,
+    IDepartmentService departmentService)
     : Controller
 {
-    //transfer Data
-    //1. Action ==> View
-    //2. View   ==> Layout
-    //3. View   ==> Partial
+        //transfer Data
+        //1. Action ==> View
+        //2. View   ==> Layout
+        //3. View   ==> Partial
 
-    [HttpGet]
-public IActionResult Index()
-{
+        [HttpGet]
+    public IActionResult Index(string? SearchValue)
+    {
+        //Addsearch
+        if(string.IsNullOrWhiteSpace(SearchValue))
+            return View(employeeService.GetAll());
+       
+        return View(employeeService.GetAll(SearchValue));
         // Get All Employee
-        var employees = employeeService.GetAll();
-        ViewData["Hi"] = "Welcome to Employee Page";
-        ViewBag.Hi = "Welcome to Employee Page";
-        return View(employees);
-}
+        //var employees = employeeService.GetAll();
+        //ViewData["Hi"] = "Welcome to Employee Page";
+        //ViewBag.Hi = "Welcome to Employee Page";
+        //return View(employees);
+    }
 
-#region Create
-[HttpGet]
-public IActionResult Create()
-{
-    return View();
-}
-[HttpPost]
-public IActionResult Create(EmployeeRequest request)
-{
-    //Validation
-    if (!ModelState.IsValid)
-        return View(request);
-    try
+    #region Create
+    [HttpGet]
+    public IActionResult Create()
     {
-        var result = employeeService.Add(request);
-            if (result > 0)
-                TempData["message"] = $"Employee {request.Name} is Created .";
-            else
-                TempData["message"] = $"Employee {request.Name} is not Created .";    
+        var departments = departmentService.GetAll();
+        var select = new SelectList(departments,"Id" , "Name");
+        ViewBag.Departments = select;
+        return View();
+    }
+    [HttpPost]
+    public IActionResult Create(EmployeeRequest request)
+    {
+        //Validation
+        if (!ModelState.IsValid)
+            return View(request);
+        try
+        {
+            var result = employeeService.Add(request);
+                if (result > 0)
+                    TempData["message"] = $"Employee {request.Name} is Created .";
+                else
+                    TempData["message"] = $"Employee {request.Name} is not Created .";    
 
-        return RedirectToAction("Index");
+            return RedirectToAction("Index");
         
-        //ModelState.AddModelError(string.Empty, "Unable to Create employee");
+            //ModelState.AddModelError(string.Empty, "Unable to Create employee");
+        }
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
+        return View(request);
     }
-    catch (Exception ex)
+    #endregion
+
+    #region Details
+    [HttpGet]
+    public IActionResult Details(int? id)
     {
-        if (env.IsDevelopment())
-            ModelState.AddModelError(string.Empty, ex.Message);
-        else
-            logger.LogError("Something is Wrong", ex.Message);
-    }
-    return View(request);
-}
-#endregion
+        EmployeeDetailsResponse? employee ;
+            (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
+            if (!flowControl)
+                return value;
+            return View(employee);
+            //if (!id.HasValue)
+            //    return BadRequest();
+            //var employee = employeeService.GetById(id.Value);
+            //if (employee == null)
+            //    return NotFound();
+            //return View(employee);
+        }
+    #endregion
 
-#region Details
-[HttpGet]
-public IActionResult Details(int? id)
-{
-    EmployeeDetailsResponse? employee ;
-        (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
-        if (!flowControl)
-            return value;
-        return View(employee);
-        //if (!id.HasValue)
-        //    return BadRequest();
-        //var employee = employeeService.GetById(id.Value);
-        //if (employee == null)
-        //    return NotFound();
-        //return View(employee);
-    }
-#endregion
-
-#region Edit
-[HttpGet]
-public IActionResult Edit(int? id)
-{
+    #region Edit
+    [HttpGet]
+    public IActionResult Edit(int? id)
+    {
         EmployeeDetailsResponse? employee;
         (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
         if (!flowControl)
             return value;
+
+        var departments = departmentService.GetAll();
+        //SelectList (IEnumerable items, string dataValueField, string dataTextField, object? selectedValue);
+        var select = new SelectList(departments, "Id", "Name" , employee.DepartmentId);
+        ViewBag.Departments = select;
+        
         return View(mapper.Map<EmployeeUpdateRequest>(employee));
         //if (!id.HasValue)
         //    return BadRequest();
@@ -93,88 +109,88 @@ public IActionResult Edit(int? id)
         //if (employee == null)
         //    return NotFound();
         //return View(employee);
-    }
-[HttpPost]
-public IActionResult Edit([FromRoute] int? id, EmployeeUpdateRequest request)
-{
-    //Validation
-    if (!id.HasValue)
-        return BadRequest();
-    if (id.Value != request.Id)
-        return BadRequest();
-    if (!ModelState.IsValid)
+        }
+    [HttpPost]
+    public IActionResult Edit([FromRoute] int? id, EmployeeUpdateRequest request)
+    {
+        //Validation
+        if (!id.HasValue)
+            return BadRequest();
+        if (id.Value != request.Id)
+            return BadRequest();
+        if (!ModelState.IsValid)
+            return View(request);
+        try
+        {
+            var result = employeeService.Update(request);
+            if (result > 0)
+                return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "Unable to Create employee");
+        }
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
         return View(request);
-    try
-    {
-        var result = employeeService.Update(request);
-        if (result > 0)
-            return RedirectToAction("Index");
-        ModelState.AddModelError(string.Empty, "Unable to Create employee");
     }
-    catch (Exception ex)
-    {
-        if (env.IsDevelopment())
-            ModelState.AddModelError(string.Empty, ex.Message);
-        else
-            logger.LogError("Something is Wrong", ex.Message);
-    }
-    return View(request);
-}
-#endregion
-
-#region Delete
-[HttpGet]
-public IActionResult Delete(int? id)
-{
-        EmployeeDetailsResponse? employee;
-        (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
-        if (!flowControl)
-            return value;
-        return View(employee);
-        //if (!id.HasValue)
-        //    return BadRequest();
-        //var employee = employeeService.GetById(id.Value);
-        //if (employee == null)
-        //    return NotFound();
-        //return View(employee);
-    }
-[HttpPost, ActionName("Delete")]
-public IActionResult ConfirmDelete(int? id)
-{
-    if (!id.HasValue)
-        return BadRequest();
-    var employee = employeeService.GetById(id.Value);
-    try
-    {
-        var IsDeleted = employeeService.Delete(id.Value);
-        if (IsDeleted)
-            return RedirectToAction(nameof(Index));
-        ModelState.AddModelError(string.Empty, "Unable to Create employee");
-    }
-    catch (Exception ex)
-    {
-        if (env.IsDevelopment())
-            ModelState.AddModelError(string.Empty, ex.Message);
-        else
-            logger.LogError("Something is Wrong", ex.Message);
-    }
-    return View(employee);
-}
     #endregion
 
-//helper
-    private (bool flowControl, IActionResult value) ValidationEmployeeIdAndFetch(int? id, out EmployeeDetailsResponse? employee)
+    #region Delete
+    [HttpGet]
+    public IActionResult Delete(int? id)
     {
-
-        if (!id.HasValue)
-        {
-            employee = default;
-            return (FlowControl: false, value: BadRequest());
+            EmployeeDetailsResponse? employee;
+            (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
+            if (!flowControl)
+                return value;
+            return View(employee);
+            //if (!id.HasValue)
+            //    return BadRequest();
+            //var employee = employeeService.GetById(id.Value);
+            //if (employee == null)
+            //    return NotFound();
+            //return View(employee);
         }
-        employee = employeeService.GetById(id.Value);
-        if (employee == null)
-            return (false, NotFound());
-        return (true, null);
+    [HttpPost, ActionName("Delete")]
+    public IActionResult ConfirmDelete(int? id)
+    {
+        if (!id.HasValue)
+            return BadRequest();
+        var employee = employeeService.GetById(id.Value);
+        try
+        {
+            var IsDeleted = employeeService.Delete(id.Value);
+            if (IsDeleted)
+                return RedirectToAction(nameof(Index));
+            ModelState.AddModelError(string.Empty, "Unable to Create employee");
+        }
+        catch (Exception ex)
+        {
+            if (env.IsDevelopment())
+                ModelState.AddModelError(string.Empty, ex.Message);
+            else
+                logger.LogError("Something is Wrong", ex.Message);
+        }
+        return View(employee);
     }
+        #endregion
+
+    //helper
+        private (bool flowControl, IActionResult value) ValidationEmployeeIdAndFetch(int? id, out EmployeeDetailsResponse? employee)
+        {
+
+            if (!id.HasValue)
+            {
+                employee = default;
+                return (FlowControl: false, value: BadRequest());
+            }
+            employee = employeeService.GetById(id.Value);
+            if (employee == null)
+                return (false, NotFound());
+            return (true, null);
+        }
 }
 

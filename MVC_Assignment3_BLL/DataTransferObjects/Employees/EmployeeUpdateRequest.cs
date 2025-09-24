@@ -26,4 +26,8 @@ public class EmployeeUpdateRequest
     public DateOnly HiringDate { get; set; }
     public Gender gender { get; set; }
     public EmployeeType employeeType { get; set; }
+
+    //relation
+    [Display(Name = "Department")]
+    public int? DepartmentId { get; set; }
 }

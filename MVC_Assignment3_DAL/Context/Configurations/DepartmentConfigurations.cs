@@ -26,6 +26,9 @@ internal class DepartmentConfigurations : IEntityTypeConfiguration<Department>
         builder.Property(d => d.CreateOn)
             .HasDefaultValueSql("GETDATE()");
 
-        
+        //Relation
+        builder.HasMany(d => d.Employees)
+            .WithOne(e => e.department)
+            .HasForeignKey(e => e.DepartmentId);
     }
 }

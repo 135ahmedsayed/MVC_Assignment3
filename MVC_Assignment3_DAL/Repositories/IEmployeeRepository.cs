@@ -6,5 +6,6 @@ public interface IEmployeeRepository : IRepository<Employee>
     IEnumerable<Employee> GetAll(string name);
 
     //to retreve to services IEnumerable
-    IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector);
+    IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector
+        , Expression<Func<Employee, bool>>? predicate = null);
 }

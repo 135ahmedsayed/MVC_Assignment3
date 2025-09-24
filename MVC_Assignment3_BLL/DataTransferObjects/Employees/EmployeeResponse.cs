@@ -16,5 +16,7 @@ public class EmployeeResponse
     public string gender { get; set; }
     [Display(Name = "Employee Type")]
     public string employeeType { get; set; }
+    [Display(Name = "Department")]
+    public string? DepartmentName { get; set; }
 
 }

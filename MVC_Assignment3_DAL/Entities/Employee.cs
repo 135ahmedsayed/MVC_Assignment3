@@ -14,4 +14,7 @@ public class Employee : BaseEntity
     public string? Position { get; set; }
     public Gender gender { get; set; }
     public EmployeeType employeeType { get; set; }
+    //Relation
+    public Department department { get; set; } 
+    public int? DepartmentId { get; set; } //FK
 }

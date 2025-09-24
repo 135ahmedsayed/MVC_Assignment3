@@ -4,45 +4,47 @@ using MVC_Assignment3_DAL.Entities;
 using MVC_Assignment3_DAL.Repositories;
 
 namespace MVC_Assignment3_BLL.Services;
-public class DepartmentService(IDepartmentRepository departmentRepository) : IDepartmentService
+public class DepartmentService(IUnitOfWork unitofwork) : IDepartmentService
 {
     #region Dependency Injection
     //Repo
-    //private IDepartmentRepository _departmentRepository = departmentRepository;
+    //private IDepartmentRepository _unitofwork.Departments = unitofwork.Departments;
 
     public int Add(DepartmentRequest request)
     {
         //mapping 
         var department = request.ToDepartmentRequest();
-        return departmentRepository.Add(department);
+        unitofwork.Departments.Add(department);
+        return unitofwork.SaveChanges();
     }
 
     public bool Delete(int id)
     {
-        var department = departmentRepository.GetById(id);
+        var department = unitofwork.Departments.GetById(id);
         if (department == null)
             return false;
-        var result = departmentRepository.Delete(department);
-        return result > 0;   
+        unitofwork.Departments.Delete(department);
+        return unitofwork.SaveChanges() > 0;   
 
     }
 
     public IEnumerable<DepartmentResponse>? GetAll()
     {
-        return departmentRepository.GetAll()
+        return unitofwork.Departments.GetAll()
             .Select(d => d.ToDepartmentResponse());
     }
 
     public DepartmentDetailsResponse? GetById(int id)
     {
-        return departmentRepository.GetById(id)?
+        return unitofwork.Departments.GetById(id)?
             .ToDepartmentDetailsResponse();
     }
 
     public int Update(DepartmentUpdateRequest request)
     {
-        return departmentRepository.Update(request.ToDepartmentRequest());
-           
+        unitofwork.Departments.Update(request.ToDepartmentRequest());
+        return unitofwork.SaveChanges();
+
     }
     #endregion
 }

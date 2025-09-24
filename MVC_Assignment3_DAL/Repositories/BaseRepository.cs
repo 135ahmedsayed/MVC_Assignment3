@@ -16,26 +16,26 @@ public class BaseRepository<TEntity>(CompanyDBContext dBContext)
     //    _dBContext = dBContext;
     //}
 
-    public virtual int Add(TEntity entity)
+    public virtual void Add(TEntity entity)
     {
         _dBContext.Add(entity);
         //return dBContext.SaveChanges();
-        try
-        {
-            return dBContext.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            // هنا هنطبع الرسالة الأساسية
-            Console.WriteLine(ex.Message);
-        }
-        return dBContext.SaveChanges();
+        //try
+        //{
+        //    return dBContext.SaveChanges();
+        //}
+        //catch (Exception ex)
+        //{
+        //    // هنا هنطبع الرسالة الأساسية
+        //    Console.WriteLine(ex.Message);
+        //}
+        //return dBContext.SaveChanges();
     }
 
-    public virtual int Delete(TEntity entity)
+    public virtual void Delete(TEntity entity)
     {
         _dBContext.Remove(entity);
-        return dBContext.SaveChanges();
+        //return dBContext.SaveChanges();
     }
 
     public virtual IEnumerable<TEntity> GetAll(bool trackChanges = false)
@@ -54,10 +54,10 @@ public class BaseRepository<TEntity>(CompanyDBContext dBContext)
     //    return _dBContext.FirstOrDefault(n => n.Name == name);
     //}
 
-    public virtual int Update(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
         _dBContext.Update(entity);
-        return dBContext.SaveChanges();
+        //return dBContext.SaveChanges();
     }
     #endregion
 }

@@ -28,5 +28,10 @@ public class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
         builder.Property(g => g.employeeType)
             .HasConversion(x => x.ToString(), y => Enum.Parse<EmployeeType>(y));
         //HasConversion(Convert TO , Convert From)
+
+        //Relation
+        builder.HasOne(d => d.department)
+            .WithMany(d => d.Employees)
+            .HasForeignKey(e => e.DepartmentId);
     }
 }

@@ -11,7 +11,12 @@ public class EmployeeProfile : Profile
 
 
         CreateMap<Employee, EmployeeResponse>();
-        CreateMap<Employee, EmployeeDetailsResponse>();
+
+        // map item from another table (department) to EmployeeDetailsResponse
+        CreateMap<Employee, EmployeeDetailsResponse>()
+            .ForMember(d => d.DepartmentName,
+            o => o.MapFrom(s => s.department.Name));
+
         CreateMap<EmployeeDetailsResponse,EmployeeUpdateRequest>();
         CreateMap<EmployeeUpdateRequest, EmployeeRequest>();
     }
