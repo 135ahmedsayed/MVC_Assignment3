@@ -7,6 +7,7 @@ public interface IEmployeeService
     // Get , All , Update , Delete , Add
     EmployeeDetailsResponse? GetById(int id); //get by id
     IEnumerable<EmployeeResponse>? GetAll(); //GetALL
+    IEnumerable<EmployeeResponse>? GetAll(string SearchValue); //GetALL(SearchValue)
     int Update(EmployeeUpdateRequest request);
     bool Delete(int id);
     int Add(EmployeeRequest request); //Add()

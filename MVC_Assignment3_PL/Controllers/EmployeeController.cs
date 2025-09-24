@@ -18,13 +18,18 @@ public class EmployeeController(IEmployeeService employeeService,
         //3. View   ==> Partial
 
         [HttpGet]
-    public IActionResult Index()
+    public IActionResult Index(string? SearchValue)
     {
+        //Addsearch
+        if(string.IsNullOrWhiteSpace(SearchValue))
+            return View(employeeService.GetAll());
+       
+        return View(employeeService.GetAll(SearchValue));
         // Get All Employee
-        var employees = employeeService.GetAll();
-        ViewData["Hi"] = "Welcome to Employee Page";
-        ViewBag.Hi = "Welcome to Employee Page";
-        return View(employees);
+        //var employees = employeeService.GetAll();
+        //ViewData["Hi"] = "Welcome to Employee Page";
+        //ViewBag.Hi = "Welcome to Employee Page";
+        //return View(employees);
     }
 
     #region Create

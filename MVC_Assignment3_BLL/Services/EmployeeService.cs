@@ -46,6 +46,21 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
         return employee;
     }
 
+    public IEnumerable<EmployeeResponse>? GetAll(string SearchValue)
+    {
+        var employee = employeeRepository.GetAll(x => new EmployeeResponse
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Age = x.Age,
+            Salary = x.Salary,
+            IsActive = x.IsActive,
+            DepartmentName = x.department.Name != null ? x.department.Name : "No Department",
+        }).Where(e => e.Name.Contains(SearchValue) || e.DepartmentName.Contains(SearchValue)); //Search by Name And Department Name
+        //return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
+        return employee;
+    }
+
     public EmployeeDetailsResponse? GetById(int id)
     {
         var employee = employeeRepository.GetById(id);

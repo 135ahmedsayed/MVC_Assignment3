@@ -55,9 +55,14 @@ public class EmployeeRepository(CompanyDBContext dbContext)
        return _dBContext.Where(e => e.Name.Contains(name)).ToList();
     }
 
-    public IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector)
+    
+
+    public IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector,
+        Expression<Func<Employee, bool>>? predicate = null)
     {
-        return _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToList();
+        if(predicate is null)
+            return _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToList();
+        return _dBContext.Where(e => !e.IsDeleted).Where(predicate).Select(Selector).ToList();
     }
 
     public override Employee? GetById(int id)
