@@ -5,7 +5,7 @@ public interface IRepository<TEntity>
     IEnumerable<TEntity> GetAll(bool trackChanges = false);
     TEntity? GetById(int id);
     //TEntity? GetByName(string name);
-    int Add(TEntity Entity);
-    int Update(TEntity Entity);
-    int Delete(TEntity Entity);
+    void Add(TEntity Entity);
+    void Update(TEntity Entity);
+    void Delete(TEntity Entity);
 }

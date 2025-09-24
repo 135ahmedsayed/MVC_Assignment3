@@ -7,7 +7,7 @@ global using MVC_Assignment3_DAL.Repositories;
 
 namespace MVC_Assignment3_BLL.Services;
 
-public class EmployeeService(IEmployeeRepository employeeRepository , IMapper mapper) : IEmployeeService
+public class EmployeeService(IUnitOfWork unitofwork , IMapper mapper) : IEmployeeService
 {
     #region Dependency Injection
     //Repo
@@ -18,22 +18,23 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
         //mapping t==> Auto Mapper 
         //mapper.Map<Source,Destination>();
         var employee = mapper.Map<EmployeeRequest,Employee>(request);
-        return employeeRepository.Add(employee);
+        unitofwork.Employees.Add(employee);
+        return unitofwork.SaveChanges();
     }
 
     public bool Delete(int id)
     {
-        var employee = employeeRepository.GetById(id);
+        var employee = unitofwork.Employees.GetById(id);
         if (employee == null)
             return false;
-        var result = employeeRepository.Delete(employee);
-        return result > 0;
+        unitofwork.Employees.Delete(employee);
+        return unitofwork.SaveChanges() > 0;
 
     }
 
     public IEnumerable<EmployeeResponse>? GetAll()
     {
-        var employee = employeeRepository.GetAll(x => new EmployeeResponse
+        var employee = unitofwork.Employees.GetAll(x => new EmployeeResponse
         {
             Id = x.Id,
             Name = x.Name,
@@ -48,7 +49,7 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
 
     public IEnumerable<EmployeeResponse>? GetAll(string SearchValue)
     {
-        var employee = employeeRepository.GetAll(x => new EmployeeResponse
+        var employee = unitofwork.Employees.GetAll(x => new EmployeeResponse
         {
             Id = x.Id,
             Name = x.Name,
@@ -63,14 +64,15 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
 
     public EmployeeDetailsResponse? GetById(int id)
     {
-        var employee = employeeRepository.GetById(id);
+        var employee = unitofwork.Employees.GetById(id);
         return mapper.Map<Employee, EmployeeDetailsResponse>(employee);
     }
 
     public int Update(EmployeeUpdateRequest request)
     {
         var employee = mapper.Map<EmployeeUpdateRequest, Employee>(request);
-        return employeeRepository.Update(employee);
+        unitofwork.Employees.Update(employee);
+        return unitofwork.SaveChanges();
 
     }
     #endregion
