@@ -87,17 +87,23 @@ public class EmployeeController(IEmployeeService employeeService,
     [HttpGet]
     public IActionResult Edit(int? id)
     {
-            EmployeeDetailsResponse? employee;
-            (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
-            if (!flowControl)
-                return value;
-            return View(mapper.Map<EmployeeUpdateRequest>(employee));
-            //if (!id.HasValue)
-            //    return BadRequest();
-            //var employee = employeeService.GetById(id.Value);
-            //if (employee == null)
-            //    return NotFound();
-            //return View(employee);
+        EmployeeDetailsResponse? employee;
+        (bool flowControl, IActionResult value) = ValidationEmployeeIdAndFetch(id, out employee);
+        if (!flowControl)
+            return value;
+
+        var departments = departmentService.GetAll();
+        //SelectList (IEnumerable items, string dataValueField, string dataTextField, object? selectedValue);
+        var select = new SelectList(departments, "Id", "Name" , employee.DepartmentId);
+        ViewBag.Departments = select;
+        
+        return View(mapper.Map<EmployeeUpdateRequest>(employee));
+        //if (!id.HasValue)
+        //    return BadRequest();
+        //var employee = employeeService.GetById(id.Value);
+        //if (employee == null)
+        //    return NotFound();
+        //return View(employee);
         }
     [HttpPost]
     public IActionResult Edit([FromRoute] int? id, EmployeeUpdateRequest request)

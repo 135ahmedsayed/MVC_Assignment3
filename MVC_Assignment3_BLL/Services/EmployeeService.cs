@@ -40,6 +40,7 @@ public class EmployeeService(IEmployeeRepository employeeRepository , IMapper ma
             Age = x.Age,
             Salary = x.Salary,
             IsActive = x.IsActive,
+            DepartmentName = x.department.Name != null ? x.department.Name : "No Department",
         });
         //return mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(employee);
         return employee;

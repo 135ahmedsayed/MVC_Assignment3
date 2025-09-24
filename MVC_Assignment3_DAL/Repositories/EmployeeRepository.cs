@@ -59,4 +59,10 @@ public class EmployeeRepository(CompanyDBContext dbContext)
     {
         return _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToList();
     }
+
+    public override Employee? GetById(int id)
+    {
+        return _dBContext.Include(e => e.department)
+            .FirstOrDefault(e => e.Id == id);
+    }
 }

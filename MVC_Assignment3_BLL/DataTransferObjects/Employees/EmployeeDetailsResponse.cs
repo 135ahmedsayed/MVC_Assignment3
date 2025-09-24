@@ -1,4 +1,5 @@
-﻿using MVC_Assignment3_DAL.Entities.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using MVC_Assignment3_DAL.Entities.Enums;
 
 namespace MVC_Assignment3_BLL.DataTransferObjects.Employees;
 public class EmployeeDetailsResponse
@@ -18,4 +19,7 @@ public class EmployeeDetailsResponse
     public DateTime CreatedOn { get; set; }
     public int LastModifiedBy { get; set; }
     public DateTime LastModifiedOn { get; set; }
+    [Display(Name ="Department")]
+    public string? DepartmentName { get; set; }
+    public int? DepartmentId { get; set; }
 }
