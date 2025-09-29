@@ -10,5 +10,6 @@ public class UnitOfWork(CompanyDBContext dBContext ,
 
     public IDepartmentRepository Departments => departmentRepository;
 
-    public int SaveChanges() => dBContext.SaveChanges();
+
+    public async Task<int> SaveChangesAsync() => await dBContext.SaveChangesAsync();
 }

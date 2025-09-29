@@ -13,10 +13,10 @@ public class DepartmentController(IDepartmentService departmentService,
 
     #endregion
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         // Get All Department
-        var departments = departmentService.GetAll();
+        var departments =await departmentService.GetAllAsync();
         return View(departments);
     }
 
@@ -27,14 +27,14 @@ public class DepartmentController(IDepartmentService departmentService,
         return View();
     }
     [HttpPost]
-    public IActionResult Create(DepartmentRequest request)
+    public async Task<IActionResult> Create(DepartmentRequest request)
     {
         //Validation
         if(!ModelState.IsValid)
             return View(request);
         try
         {
-            var result = departmentService.Add(request);
+            var result = await departmentService.AddAsync(request);
             if (result > 0)
                 return RedirectToAction("Index");
             ModelState.AddModelError(string.Empty, "Unable to Create department");
@@ -52,11 +52,11 @@ public class DepartmentController(IDepartmentService departmentService,
 
     #region Details
     [HttpGet]
-    public IActionResult Details(int? id)
+    public async Task<IActionResult> Details(int? id)
     {
         if(!id.HasValue)
             return BadRequest();
-        var department = departmentService.GetById(id.Value);
+        var department =await departmentService.GetByIdAsync(id.Value);
         if (department == null)
             return NotFound();
         return View(department);
@@ -65,17 +65,17 @@ public class DepartmentController(IDepartmentService departmentService,
 
     #region Edit
     [HttpGet]
-    public IActionResult Edit(int? id)
+    public async Task<IActionResult> Edit(int? id)
     {
         if (!id.HasValue)
             return BadRequest();
-        var department = departmentService.GetById(id.Value);
+        var department =await departmentService.GetByIdAsync(id.Value);
         if (department == null)
             return NotFound();
         return View(department.UpdateDepartment());
     }
     [HttpPost]
-    public IActionResult Edit([FromRoute]int? id , DepartmentUpdateRequest request)
+    public async Task<IActionResult> Edit([FromRoute]int? id , DepartmentUpdateRequest request)
     {
         //Validation
         if (!id.HasValue)
@@ -86,7 +86,7 @@ public class DepartmentController(IDepartmentService departmentService,
             return View(request);
         try
         {
-            var result = departmentService.Update(request);
+            var result =await departmentService.UpdateAsync(request);
             if (result > 0)
                 return RedirectToAction("Index");
             ModelState.AddModelError(string.Empty, "Unable to Create department");
@@ -104,24 +104,24 @@ public class DepartmentController(IDepartmentService departmentService,
 
     #region Delete
     [HttpGet]
-    public IActionResult Delete(int? id)
+    public async Task<IActionResult> Delete(int? id)
     {
         if (!id.HasValue)
             return BadRequest();
-        var department = departmentService.GetById(id.Value);
+        var department = await departmentService.GetByIdAsync(id.Value);
         if (department == null)
             return NotFound();
         return View(department);
     }
     [HttpPost ,ActionName("Delete")]
-    public IActionResult ConfirmDelete(int? id)
+    public async Task<IActionResult> ConfirmDelete(int? id)
     {
         if (!id.HasValue)
             return BadRequest();
-        var department = departmentService.GetById(id.Value);
+        var department = departmentService.GetByIdAsync(id.Value);
         try
         {
-            var IsDeleted = departmentService.Delete(id.Value);
+            var IsDeleted =await departmentService.DeleteAsync(id.Value);
             if (IsDeleted)
                 return RedirectToAction(nameof(Index));
             ModelState.AddModelError(string.Empty, "Unable to Create department");

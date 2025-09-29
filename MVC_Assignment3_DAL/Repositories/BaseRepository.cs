@@ -38,15 +38,15 @@ public class BaseRepository<TEntity>(CompanyDBContext dBContext)
         //return dBContext.SaveChanges();
     }
 
-    public virtual IEnumerable<TEntity> GetAll(bool trackChanges = false)
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false)
     {
-        return trackChanges ? _dBContext.ToList()
-            : _dBContext.AsNoTracking().ToList();
+        return trackChanges ? await _dBContext.ToListAsync()
+            : await _dBContext.AsNoTracking().ToListAsync();
     }
 
-    public virtual TEntity? GetById(int id)
+    public virtual async Task<TEntity?> GetByIdAsync(int id)
     {
-        return _dBContext.Find(id);
+        return await _dBContext.FindAsync(id);
     }
 
     //public TEntity? GetByName(string name)

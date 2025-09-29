@@ -22,4 +22,6 @@ public class EmployeeDetailsResponse
     [Display(Name ="Department")]
     public string? DepartmentName { get; set; }
     public int? DepartmentId { get; set; }
+
+    public string? Image { get; set; }
 }

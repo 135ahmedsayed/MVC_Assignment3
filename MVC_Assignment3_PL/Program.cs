@@ -21,6 +21,7 @@ namespace MVC_Assignment3_PL
             #region Dependency Injection(Add Services)
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
             builder.Services.AddScoped<IEmployeeService,EmployeeService>();
+            builder.Services.AddScoped<IDocumentService, DocumentService>();
             #region Repistory
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

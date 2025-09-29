@@ -17,4 +17,5 @@ public class Employee : BaseEntity
     //Relation
     public Department department { get; set; } 
     public int? DepartmentId { get; set; } //FK
+    public string? Image { get; set; } //Add Image
 }

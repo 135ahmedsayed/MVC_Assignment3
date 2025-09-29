@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using MVC_Assignment3_DAL.Entities.Enums;
 
 namespace MVC_Assignment3_BLL.DataTransferObjects.Employees;
@@ -30,4 +31,6 @@ public class EmployeeRequest //create
     //relation
     [Display(Name ="Department")]
     public int? DepartmentId { get; set; }
+    //AddImageButton
+    public IFormFile? ImageFile { get; set; }
 }

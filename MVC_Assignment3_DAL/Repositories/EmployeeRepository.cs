@@ -57,17 +57,17 @@ public class EmployeeRepository(CompanyDBContext dbContext)
 
     
 
-    public IEnumerable<TResult> GetAll<TResult>(Expression<Func<Employee, TResult>> Selector,
+    public async Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<Employee, TResult>> Selector,
         Expression<Func<Employee, bool>>? predicate = null)
     {
         if(predicate is null)
-            return _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToList();
-        return _dBContext.Where(e => !e.IsDeleted).Where(predicate).Select(Selector).ToList();
+            return await _dBContext.Where(e => !e.IsDeleted).Select(Selector).ToListAsync();
+        return await _dBContext.Where(e => !e.IsDeleted).Where(predicate).Select(Selector).ToListAsync();
     }
 
-    public override Employee? GetById(int id)
+    public override async Task<Employee?> GetByIdAsync(int id)
     {
-        return _dBContext.Include(e => e.department)
-            .FirstOrDefault(e => e.Id == id);
+        return await _dBContext.Include(e => e.department)
+            .FirstOrDefaultAsync(e => e.Id == id);
     }
 }

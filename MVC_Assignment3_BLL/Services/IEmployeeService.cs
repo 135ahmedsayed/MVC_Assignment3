@@ -5,10 +5,10 @@ namespace MVC_Assignment3_BLL.Services;
 public interface IEmployeeService
 {
     // Get , All , Update , Delete , Add
-    EmployeeDetailsResponse? GetById(int id); //get by id
-    IEnumerable<EmployeeResponse>? GetAll(); //GetALL
-    IEnumerable<EmployeeResponse>? GetAll(string SearchValue); //GetALL(SearchValue)
-    int Update(EmployeeUpdateRequest request);
-    bool Delete(int id);
-    int Add(EmployeeRequest request); //Add()
+    Task<EmployeeDetailsResponse?> GetByIdAsync(int id); //get by id
+    Task<IEnumerable<EmployeeResponse>?> GetAllAsync(); //GetALL
+    Task<IEnumerable<EmployeeResponse>?> GetAllAsync(string SearchValue); //GetALL(SearchValue)
+    Task<int> UpdateAsync(EmployeeUpdateRequest request);
+    Task<bool> DeleteAsync(int id);
+    Task<int> AddAsync(EmployeeRequest request); //Add()
 }
