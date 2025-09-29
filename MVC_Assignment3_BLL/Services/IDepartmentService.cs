@@ -3,9 +3,9 @@
 namespace MVC_Assignment3_BLL.Services;
 public interface IDepartmentService
 {
-    DepartmentDetailsResponse? GetById(int id); //get by id
-    IEnumerable<DepartmentResponse>? GetAll(); //GetALL
-    int Update(DepartmentUpdateRequest request);
-    bool Delete(int id);
-    int Add(DepartmentRequest request); //Add()
+    Task<DepartmentDetailsResponse?> GetByIdAsync(int id); //get by id
+    Task<IEnumerable<DepartmentResponse>?> GetAllAsync(); //GetALL
+    Task<int> UpdateAsync(DepartmentUpdateRequest request);
+    Task<bool> DeleteAsync(int id);
+    Task<int> AddAsync(DepartmentRequest request); //Add()
 }

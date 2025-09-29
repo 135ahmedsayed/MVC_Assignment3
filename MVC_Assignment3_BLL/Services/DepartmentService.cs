@@ -10,40 +10,40 @@ public class DepartmentService(IUnitOfWork unitofwork) : IDepartmentService
     //Repo
     //private IDepartmentRepository _unitofwork.Departments = unitofwork.Departments;
 
-    public int Add(DepartmentRequest request)
+    public async Task<int> AddAsync(DepartmentRequest request)
     {
         //mapping 
         var department = request.ToDepartmentRequest();
         unitofwork.Departments.Add(department);
-        return unitofwork.SaveChanges();
+        return await unitofwork.SaveChangesAsync();
     }
 
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var department = unitofwork.Departments.GetById(id);
+        var department = await unitofwork.Departments.GetByIdAsync(id);
         if (department == null)
             return false;
         unitofwork.Departments.Delete(department);
-        return unitofwork.SaveChanges() > 0;   
+        return await unitofwork.SaveChangesAsync() > 0;   
 
     }
 
-    public IEnumerable<DepartmentResponse>? GetAll()
+    public async Task<IEnumerable<DepartmentResponse>?> GetAllAsync()
     {
-        return unitofwork.Departments.GetAll()
+        return (await unitofwork.Departments.GetAllAsync())
             .Select(d => d.ToDepartmentResponse());
     }
 
-    public DepartmentDetailsResponse? GetById(int id)
+    public async Task<DepartmentDetailsResponse?> GetByIdAsync(int id)
     {
-        return unitofwork.Departments.GetById(id)?
+        return (await unitofwork.Departments.GetByIdAsync(id))?
             .ToDepartmentDetailsResponse();
     }
 
-    public int Update(DepartmentUpdateRequest request)
+    public async Task<int> UpdateAsync(DepartmentUpdateRequest request)
     {
         unitofwork.Departments.Update(request.ToDepartmentRequest());
-        return unitofwork.SaveChanges();
+        return await unitofwork.SaveChangesAsync();
 
     }
     #endregion
