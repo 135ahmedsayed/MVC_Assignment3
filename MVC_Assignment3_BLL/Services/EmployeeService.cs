@@ -7,7 +7,8 @@ global using MVC_Assignment3_DAL.Repositories;
 
 namespace MVC_Assignment3_BLL.Services;
 
-public class EmployeeService(IUnitOfWork unitofwork , IMapper mapper) : IEmployeeService
+public class EmployeeService(IUnitOfWork unitofwork , IMapper mapper 
+    , IDocumentService documentService) : IEmployeeService
 {
     #region Dependency Injection
     //Repo
@@ -18,6 +19,13 @@ public class EmployeeService(IUnitOfWork unitofwork , IMapper mapper) : IEmploye
         //mapping t==> Auto Mapper 
         //mapper.Map<Source,Destination>();
         var employee = mapper.Map<EmployeeRequest,Employee>(request);
+        //Upload File
+        if (request.ImageFile != null && request.ImageFile.Length > 0)
+        {
+            var fileName = await documentService.UploadAsync(request.ImageFile, "Images");
+            employee.Image = fileName;
+        }
+        //
         unitofwork.Employees.Add(employee);
         return await unitofwork.SaveChangesAsync();
     }
@@ -28,8 +36,15 @@ public class EmployeeService(IUnitOfWork unitofwork , IMapper mapper) : IEmploye
         if (employee == null)
             return false;
         unitofwork.Employees.Delete(employee);
-        return await unitofwork.SaveChangesAsync() > 0;
-
+        
+        //delete image
+        var result = await unitofwork.SaveChangesAsync();
+        if (result > 0 && employee.Image != null)
+        {
+            documentService.Delete(employee.Image, "Images");
+            return true;
+        }
+        return false;
     }
 
     public async Task<IEnumerable<EmployeeResponse>?> GetAllAsync()

@@ -12,6 +12,10 @@ public class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
             .HasColumnType("VarChar")
             .IsRequired(true)
             .HasMaxLength(30);
+        builder.Property(e => e.Image)
+            .HasColumnType("VarChar")
+            .IsRequired(false)
+            .HasMaxLength(256);
         builder.Property(e => e.Email)
             .HasColumnType("VarChar")
             .IsRequired(false)

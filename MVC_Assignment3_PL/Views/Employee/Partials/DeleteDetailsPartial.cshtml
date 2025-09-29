@@ -1,4 +1,11 @@
 ﻿@model EmployeeDetailsResponse
+@* delete *@
+<div class="row justify-content-center align-items-center">
+    <div class="col-4">
+        <img src="~/Data/Images/@Model.Image" class="img-fluid rounded-circle" alt="Employee's Image"/>
+    </div>
+</div>
+@* /// *@
 <ul class="nav nav-tabs" id="departmentTabs" role="tablist">
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
