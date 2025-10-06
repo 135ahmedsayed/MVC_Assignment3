@@ -6,6 +6,7 @@ using MVC_Assignment3_DAL.Entities;
 using MVC_Assignment3_DAL.Repositories;
 
 using MVC_Assignment3_BLL;
+using Microsoft.AspNetCore.Identity;
 
 namespace MVC_Assignment3_PL
 {
@@ -28,6 +29,10 @@ namespace MVC_Assignment3_PL
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IRepository<Department>, BaseRepository<Department>>();
             //builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            //Security
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<CompanyDBContext>(); 
+            //
             #endregion
             //builder.Services.AddScoped<CompanyDBContext>();
             builder.Services.AddDbContext<CompanyDBContext>(option =>
@@ -35,7 +40,7 @@ namespace MVC_Assignment3_PL
                 var Connectionstring = builder.Configuration.GetConnectionString("DefaultConnection");
                 option.UseSqlServer(Connectionstring); // Connection String
             });
-
+            
             //AutoMapper
             //builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly); Wrong
             builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReference).Assembly));
