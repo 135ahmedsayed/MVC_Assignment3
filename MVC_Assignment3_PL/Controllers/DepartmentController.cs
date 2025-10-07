@@ -2,8 +2,10 @@
 global using Microsoft.AspNetCore.Mvc;
 global using MVC_Assignment3_BLL.DataTransferObjects.Departments;
 global using MVC_Assignment3_BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC_Assignment3_PL.Controllers;
+[Authorize]
 public class DepartmentController(IDepartmentService departmentService,
     ILogger<DepartmentController> logger , IWebHostEnvironment env) 
     : Controller
@@ -12,6 +14,7 @@ public class DepartmentController(IDepartmentService departmentService,
     // Service
 
     #endregion
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -26,6 +29,7 @@ public class DepartmentController(IDepartmentService departmentService,
     {
         return View();
     }
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Create(DepartmentRequest request)
     {
