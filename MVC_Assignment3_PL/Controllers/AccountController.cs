@@ -68,4 +68,12 @@ public class AccountController(UserManager<ApplicationUser> UserManager ,
         return View(loginViewModel);
     }
     #endregion
+
+    #region Logout
+    public async Task<IActionResult> Logout()
+    {
+        await manager.SignOutAsync();
+        return RedirectToAction("Index","Home");
+    }
+    #endregion
 }
