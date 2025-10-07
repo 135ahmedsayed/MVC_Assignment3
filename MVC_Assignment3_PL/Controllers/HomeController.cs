@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MVC_Assignment3_PL.Models;
+using MVC_Assignment3_PL.ViewModels;
 
 namespace MVC_Assignment3_PL.Controllers
 {

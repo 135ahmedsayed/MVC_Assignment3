@@ -58,8 +58,8 @@ namespace MVC_Assignment3_PL
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseRouting();
-
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(

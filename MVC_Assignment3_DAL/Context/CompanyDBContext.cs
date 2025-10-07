@@ -21,7 +21,7 @@ public class CompanyDBContext(DbContextOptions<CompanyDBContext> options)
                 .HasColumnType("VarChar");
 
         });
-        modelBuilder.Ignore<IdentityUserClaim<string>>();   //Ignore Identity Tables
+        //modelBuilder.Ignore<IdentityUserClaim<string>>();   //Ignore Identity Tables
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CompanyDBContext).Assembly);
     }
     // Creating in appsettings.json file 

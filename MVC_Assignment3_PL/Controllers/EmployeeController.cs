@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Emit;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVC_Assignment3_BLL.DataTransferObjects.Employees;
 using MVC_Assignment3_BLL.Services;
@@ -7,6 +8,7 @@ using MVC_Assignment3_DAL.Entities;
 
 namespace MVC_Assignment3_PL.Controllers;
 
+[Authorize]
 public class EmployeeController(IEmployeeService employeeService,
     ILogger < EmployeeController > logger, IWebHostEnvironment env, IMapper mapper,
     IDepartmentService departmentService)
