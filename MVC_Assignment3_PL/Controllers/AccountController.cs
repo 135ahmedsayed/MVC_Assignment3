@@ -15,6 +15,7 @@ public class AccountController(UserManager<ApplicationUser> UserManager ,
     {
         return View();
     }
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
     {
@@ -45,6 +46,7 @@ public class AccountController(UserManager<ApplicationUser> UserManager ,
     {
         return View();
     }
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel loginViewModel)
     {

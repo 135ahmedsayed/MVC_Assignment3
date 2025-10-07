@@ -14,6 +14,7 @@ public class DepartmentController(IDepartmentService departmentService,
     // Service
 
     #endregion
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -28,6 +29,7 @@ public class DepartmentController(IDepartmentService departmentService,
     {
         return View();
     }
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Create(DepartmentRequest request)
     {

@@ -43,6 +43,7 @@ public class EmployeeController(IEmployeeService employeeService,
         ViewBag.Departments = select;
         return View();
     }
+    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Create(EmployeeRequest request)
     {
