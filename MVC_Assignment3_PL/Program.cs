@@ -29,7 +29,7 @@ namespace MVC_Assignment3_PL
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IRepository<Department>, BaseRepository<Department>>();
             //builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-            //Security
+            //Security(Identity_Service)
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CompanyDBContext>(); 
             //
